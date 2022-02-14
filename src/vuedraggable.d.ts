@@ -1,23 +1,4 @@
-declare module 'vuedraggable' {
-  import Vue, { VueConstructor } from 'vue';
-
-  type CombinedVueInstance<
-    Instance extends Vue,
-    Data,
-    Methods,
-    Computed,
-    Props
-  > = Data & Methods & Computed & Props & Instance;
-
-  type ExtendedVue<
-    Instance extends Vue,
-    Data,
-    Methods,
-    Computed,
-    Props
-  > = VueConstructor<
-    CombinedVueInstance<Instance, Data, Methods, Computed, Props> & Vue
-  >;
+  import { DefineComponent, ComponentPublicInstance } from 'vue';
 
   export type DraggedContext<T> = {
     index: number;
@@ -27,7 +8,7 @@ declare module 'vuedraggable' {
 
   export type DropContext<T> = {
     index: number;
-    component: Vue;
+    component: ComponentPublicInstance<any, any, any, any, any>;
     element: T;
   };
 
@@ -54,22 +35,21 @@ declare module 'vuedraggable' {
     isTrusted: boolean;
   };
 
-  const draggable: ExtendedVue<
-    Vue,
-    {},
-    {},
-    {},
+  declare const draggable: DefineComponent<
     {
-      options: any;
-      list: any[];
-      value: any[];
-      noTransitionOnDrag?: boolean;
-      clone: any;
-      tag?: string | null;
-      move: any;
-      componentData: any;
-    }
+      options: any,
+      list: any[],
+      value: any[],
+      noTransitionOnDrag?: boolean,
+      clone: any,
+      tag?: string | null,
+      move: any,
+      componentData: any,
+    },
+    {},
+    {},
+    {},
+    {}
   >;
 
   export default draggable;
-}
